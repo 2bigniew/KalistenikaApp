@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    
+ <!-- code from AngularJS tutorial: https://www.youtube.com/channel/UC7Vxnf06GP6w42Lg3TQLXSw -->   
     
     <div class="container">
         <div class="page-header">
@@ -152,8 +152,56 @@
         </div>
         
         <div ng-controller="resultsCtrl as results" ng-show="results.quizMetrics.resultsActive">
-            <h1>Henlo World</h1>
+            <div class="row">
+                <div class="col-xs-8">
+                    <h2>Results:</h2>
+                    <div class="btn-toolbar">
+                        <button class="btn" ng-repeat="question in results.DataService.quizQuestions" ng-class="{'btn-success': question.correct, 'btn-danger': !question.correct}" ng-click="results.setActiveQuestion($index)">
+                            <span class="glyphicon" ng-class="{'glyphicon-ok': question.correct, 'glyphicon-remove': !question.correct}"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="row">
+                        <h4>Legend:</h4>
+                        <div class="col-sm-4">
+                            <button class="btn btn-success">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                            <p>Correct</p>                            
+                        </div>  
+                        <div class="col-sm-4">
+                            <button class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            <p>Incorrect</p>
+                        </div>
+                    </div>    
+                </div>
+            </div><!-- row -->
+            <div class="row">
+                <h3>Questions:</h3>
+                <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-sx-12">
+                            <h4>{{results.activeQuestion+1+". "+results.DataService.quizQuestion[results.activeQuestion.text]}}</h4>
+                            <div class="row">
+                                <div class="col-sm-6" ng-repeat="answers in results.DataService.quizQuestions[results.activeQuestion].possibilities">
+                                    <h4 class="answer" ng-class="results.getAnswerClass($index)">
+                                        {{answers.answer}}
+                                        <p class="pull-right" ng-show="$index !== results.quizMetrics.correctAnswers[results.activeQuestion] && $index === results.DataService.quizQuestion[results.activeQuestion].selected">Your Answer</p>
+                                        <p class="pull-right" ng-show="$index === results.quizMetrics.correctAnswers[results.activeQuestion]">Correct Answer</p>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
+        
+        
     </div>
         
     
